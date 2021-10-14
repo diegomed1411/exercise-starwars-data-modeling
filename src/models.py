@@ -8,23 +8,31 @@ from eralchemy import render_er
 
 Base = declarative_base()
 
-class Character(Base):
+class Character (Base):
     __tablename__ = 'character'
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     birth_year = Column(String(250), nullable=False )
-    gender = 
+    gender = Column(String(250), nullable=False )
+    height = Column(Integer, nullable=False )
+    skin_color = Column(String(250), nullable=False )
+    eye_color = Column(String(250), nullable=False )
+    homeworld = Column(String(250), ForeignKey('planet.id'))
+    planet = relationship(Planet)
 
-class Address(Base):
-    __tablename__ = 'address'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
+class Planet(Base):
+    __tablename__ = 'planet'
     id = Column(Integer, primary_key=True)
-    street_name = Column(String(250))
-    street_number = Column(String(250))
-    post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
+    name = Column(String(250), nullable=False)
+    climate = Column(String(250), nullable=False)
+    population = Column(Integer, nullable=False )
+    orbital_period = Column(Integer, nullable=False )
+    rotation_period = Column(Integer, nullable=False )
+    diameter = Column(Integer, nullable=False )
+    character = relationship ('Character', backref='character')
+
+class Character_favorites (Base):
+    
 
     def to_dict(self):
         return {}

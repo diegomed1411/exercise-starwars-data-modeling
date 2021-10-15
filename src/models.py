@@ -18,7 +18,7 @@ class Character (Base):
     skin_color = Column(String(250), nullable=False )
     eye_color = Column(String(250), nullable=False )
     homeworld = Column(String(250), ForeignKey('planet.id'))
-    planet = relationship(Planet)
+    planet = relationship('Planet')
 
 class Planet(Base):
     __tablename__ = 'planet'
@@ -32,6 +32,16 @@ class Planet(Base):
     character = relationship ('Character', backref='character')
 
 class Character_favorites (Base):
+    __tablename__ = 'characterFavorites'
+    id = Column(Integer, primary_key=True)
+    id_character = Column(Integer, ForeignKey('character.id'))
+    character = relationship('Character')
+
+class Planet_favorites (Base):
+    __tablename__ = 'planetFavorites'
+    id= Column(Integer, primary_key=True)
+    id_planet = Column(Integer, ForeignKey('planet.id'))
+    planet = relationship('Planet')
     
 
     def to_dict(self):
